@@ -53,48 +53,31 @@ export const getEventById = async (id: string) => {
 
 //get all events based on the search query and category
 export const getAllEvents = async ({query, limit=6, page, category}: GetAllEventsParams) => {
-  // try {
-  //   await connectToDatabase()
-
-  //   const titleCondition = query ? { title: { $regex: query, $options: 'i' } } : {}
-  //   const categoryCondition = category ? await getCategoryByName(category) : null
-  //   const conditions = {
-  //     $and: [titleCondition, categoryCondition ? { category: categoryCondition._id } : {}],
-  //   }
-
-  //   const skipAmount = (Number(page) - 1) * limit
-  //   const eventsQuery = Event.find(conditions)
-  //     .sort({ createdAt: 'desc' })
-  //     .skip(skipAmount)
-  //     .limit(limit)
-
-  //   const events = await populateEvent(eventsQuery)
-  //   const eventsCount = await Event.countDocuments(conditions)
-
-  //   return {
-  //     data: JSON.parse(JSON.stringify(events)),
-  //     totalPages: Math.ceil(eventsCount / limit),
-  //   }
-  // } catch (error) {
-  //   handleError(error)
-  // }
   try {
     await connectToDatabase()
 
-    const conditions = {}
+    const titleCondition = query ? { title: { $regex: query, $options: 'i' } } : {}
+    const categoryCondition = category ? await getCategoryByName(category) : null
+    const conditions = {
+      $and: [titleCondition, categoryCondition ? { category: categoryCondition._id } : {}],
+    }
 
-    const eventsQuery = Event.find(conditions).sort({createdAt: 'desc'}).skip(0).limit(limit)
+    const skipAmount = (Number(page) - 1) * limit
+    const eventsQuery = Event.find(conditions)
+      .sort({ createdAt: 'desc' })
+      .skip(skipAmount)
+      .limit(limit)
 
     const events = await populateEvent(eventsQuery)
     const eventsCount = await Event.countDocuments(conditions)
 
     return {
-        data: JSON.parse(JSON.stringify(events)),
-        totalPages: Math.ceil(eventsCount/limit)
+      data: JSON.parse(JSON.stringify(events)),
+      totalPages: Math.ceil(eventsCount / limit),
     }
-} catch (error) {
+  } catch (error) {
     handleError(error)
-}
+  }
 }
 
 export const deleteEvent = async ({ eventId, path }: DeleteEventParams) => {

@@ -112,4 +112,5 @@ https://docs.stripe.com/checkout/quickstart?client=next
             app/api/webhook/stripe/route.js
 `step 3`: Get the signing secret from stripe and add in the environment variables
             STRIPE_WEBHOOK_SECRET
-`step 4`: Redeploy the webapp
+`step 4`: Redeploy the webapp:
+            add envs in vercel -> git add . -> git commit -m 'implement stripe' -> git push
