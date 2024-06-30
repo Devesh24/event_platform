@@ -14,9 +14,9 @@ export const createUser = async (user: CreateUserParams) => {
 
     // We dont have the server always running, hence each time we run a server action, we need to call the connectToDatabase function
     await connectToDatabase();
-    const newUser = User.create(user);
+    const newUser = await User.create(user);
+    
     return JSON.parse(JSON.stringify(newUser));
-
   } catch (error) {
     handleError(error);
   }

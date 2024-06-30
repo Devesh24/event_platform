@@ -75,12 +75,13 @@ export async function POST(req: Request) {
 
     // database action for creating user
     const newUser = await createUser(user);
+    
 
     //here we are making a db connection to our clerk model by defining the userId and passing it over as publicMatadata to our clerk user
     if (newUser) {
       await clerkClient.users.updateUserMetadata(id, {
         publicMetadata: {
-          userId: newUser._id,
+          "userId": newUser._id,
         },
       });
     }

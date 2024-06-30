@@ -9,7 +9,7 @@ const Footer = () => {
             <Image src={"/assets/images/logo.svg"} alt="EventGlide Logo" width={30} height={30}/>
             <h1 className="text-xl tracking-wider font-extrabold">EventGlide</h1>
         </Link>
-        <p>2023 EventGlide. All Rights Resreved</p>
+        <p>2024 EventGlide. All Rights Resreved</p>
       </div>
     </footer>
   )
